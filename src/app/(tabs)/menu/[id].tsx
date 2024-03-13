@@ -1,5 +1,5 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import React, { useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import products from "@assets/data/products";
 import { defaultPizzaImage } from "@/components/ProductListItem";
@@ -8,7 +8,7 @@ const sizes = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
-
+  const [selectedSize, setSelectedSize] = useState("M");
   const product = products.find((product) => product.id.toString() === id);
 
   if (!product) {
@@ -26,9 +26,25 @@ const ProductDetailsScreen = () => {
       <Text>Select size</Text>
       <View style={styles.sizes}>
         {sizes.map((size) => (
-          <View style={styles.size} key={size}>
-            <Text style={styles.sizeText}>{size}</Text>
-          </View>
+          <Pressable
+            onPress={() => setSelectedSize(size)}
+            style={[
+              styles.size,
+              {
+                backgroundColor: selectedSize === size ? "gainsboro" : "white",
+              },
+            ]}
+            key={size}
+          >
+            <Text
+              style={[
+                styles.sizeText,
+                { color: selectedSize === size ? "black" : "gray" },
+              ]}
+            >
+              {size}
+            </Text>
+          </Pressable>
         ))}
       </View>
       <Text style={styles.price}>{product.price}</Text>
@@ -58,7 +74,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+  },
+  selectedSize: {
+    backgroundColor: "orange",
   },
   sizeText: {
     fontSize: 20,
