@@ -1,11 +1,9 @@
-import React, { useContext } from 'react'
 import { View, Text, Platform } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { CartContext } from '@/providers/CartProvider'
+import { useCart } from '@/providers/CartProvider'
 
 const CartScreen = () => {
-  const {items} = useContext(CartContext)
-
+  const {items} = useCart()
   return (
     <View>
       <Text>Cart items length: {items.length}</Text>
