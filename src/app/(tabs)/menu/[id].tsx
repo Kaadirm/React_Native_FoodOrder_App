@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import products from "@assets/data/products";
 import { defaultPizzaImage } from "@/components/ProductListItem";
+import Button from "@/components/Button";
 
 const sizes = ["S", "M", "L", "XL"];
 
@@ -14,6 +15,10 @@ const ProductDetailsScreen = () => {
   if (!product) {
     return <Text>Product Not found</Text>;
   }
+
+  const addToCart = () => {
+    console.log("Adding to cart", selectedSize);
+  };
 
   return (
     <View style={styles.container}>
@@ -48,6 +53,7 @@ const ProductDetailsScreen = () => {
         ))}
       </View>
       <Text style={styles.price}>{product.price}</Text>
+      <Button onPress={addToCart} text="Add to cart" />
     </View>
   );
 };
@@ -86,6 +92,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: "bold",
+    marginTop: "auto",
   },
 });
 
