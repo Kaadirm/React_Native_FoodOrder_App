@@ -23,7 +23,7 @@ export default function MenuStack() {
         ),
       }}
     >
-      <Stack.Screen name="index" options={{ title: "Menu" }} />
+      <Stack.Screen name="index" options={{ title: "Menu"}} />
       {/* <Stack.Screen name="modal" /> */}
     </Stack>
   );
