@@ -15,11 +15,23 @@ const CartProvider = ({ children }: PropsWithChildren) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const addItem = (product: Product, size: CartItem["size"]) => {
-    console.log(product, size)
+    //if already in cart, increment quantity
+
+    const newCartItem: CartItem = {
+      id: "1", // generate
+      product: product,
+      product_id: product.id,
+      size: size,
+      quantity: 1,
+    };
+
+    setItems([newCartItem, ...items]);
   };
 
+  // updateQuantity
+
   return (
-    <CartContext.Provider value={{ items, addItem}}>
+    <CartContext.Provider value={{ items, addItem }}>
       {children}
     </CartContext.Provider>
   );
