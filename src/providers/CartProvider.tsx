@@ -18,13 +18,17 @@ const CartProvider = ({ children }: PropsWithChildren) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const addItem = (product: Product, size: CartItem["size"]) => {
-    // const existingCartItem = items.find(item => item.product_id === product.id && item.size === size);
+    const existingCartItem = items.find(item => item.product === product && item.size === size);
+    if (existingCartItem) {
+      existingCartItem.quantity += 1;
+      setItems([...items]);
+      return;
+    }
     // if (existingCartItem) {
-    //   existingCartItem.quantity += 1;
-    //   setItems([...items]);
+    //   updateQuantity(existingCartItem.id, 1)
     //   return;
     // }
-    //if already in cart, increment quantity
+    // if already in cart, increment quantity
 
     const newCartItem: CartItem = {
       id: randomUUID(), // generate
@@ -49,7 +53,6 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     setItems(updatedItems);
   };
 
-  console.log(items);
   return (
     <CartContext.Provider value={{ items, addItem, updateQuantity }}>
       {children}
