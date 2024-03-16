@@ -13,21 +13,13 @@ const ProductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
   const product = products.find((product) => product.id.toString() === id);
-  const {addItem} = useCart();
+  const { addItem } = useCart();
 
   const router = useRouter();
 
   if (!product) {
     return <Text>Product Not found</Text>;
   }
-
-  const addToCart = () => {
-    if(!products) {
-      return
-    }
-    addItem(product, selectedSize)
-    router.push("/cart")
-  };
 
   return (
     <View style={styles.container}>
@@ -37,32 +29,9 @@ const ProductDetailsScreen = () => {
         style={styles.image}
         resizeMode="contain"
       />
-      <Text>Select size</Text>
-      <View style={styles.sizes}>
-        {sizes.map((size) => (
-          <Pressable
-            onPress={() => setSelectedSize(size)}
-            style={[
-              styles.size,
-              {
-                backgroundColor: selectedSize === size ? "gainsboro" : "white",
-              },
-            ]}
-            key={size}
-          >
-            <Text
-              style={[
-                styles.sizeText,
-                { color: selectedSize === size ? "black" : "gray" },
-              ]}
-            >
-              {size}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+
+      <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>{product.price}</Text>
-      <Button onPress={addToCart} text="Add to cart" />
     </View>
   );
 };
@@ -77,31 +46,13 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 1,
   },
-  sizes: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 10,
-  },
-  size: {
-    backgroundColor: "gainsboro",
-    width: 50,
-    aspectRatio: 1,
-    padding: 10,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  selectedSize: {
-    backgroundColor: "orange",
-  },
-  sizeText: {
+  title: {
     fontSize: 20,
-    fontWeight: "500",
+    fontWeight: "bold",
   },
   price: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: "auto",
   },
 });
 
