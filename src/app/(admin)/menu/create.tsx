@@ -5,13 +5,34 @@ import Button from "@/components/Button";
 const CreateProductScreen = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [errors, setErrors] = useState("");
 
   const resetFields = () => {
     setName("");
     setPrice("");
   };
 
+  const validateInput = () => {
+    setErrors("");
+    if (!name) {
+      setErrors("Name is required");
+      return false;
+    }
+    if (!price) {
+      setErrors("Price is required");
+      return false;
+    }
+    if (isNaN(parseFloat(price))) {
+      setErrors("Price must be a number");
+      return false;
+    }
+    return true;
+  };
+
   const onCreate = (): void => {
+    if (!validateInput()) {
+      return;
+    }
     console.warn("Creating product", name, price);
 
     // Save in the database
@@ -35,7 +56,7 @@ const CreateProductScreen = () => {
         style={styles.input}
         keyboardType="numeric"
       />
-
+      <Text style={{ color: "red" }}>{errors}</Text>
       <Button onPress={onCreate} text="Create" />
     </View>
   );
