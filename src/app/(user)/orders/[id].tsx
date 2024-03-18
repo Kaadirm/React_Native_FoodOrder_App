@@ -1,7 +1,8 @@
+import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItem from "@/components/OrderListItem";
 import orders from "@assets/data/orders";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { Text, View } from "react-native";
+import { Text, View, FlatList } from "react-native";
 
 export default function OrderDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -13,9 +14,17 @@ export default function OrderDetailsScreen() {
   }
 
   return (
-    <View style={{padding: 10}}>
+    <View style={{ padding: 10, gap: 20, flex: 1 }}>
       <Stack.Screen options={{ title: `Order ${id}` }} />
       <OrderListItem order={order} />
+      <FlatList
+        data={order.order_items}
+        renderItem={({ item }) => <OrderItemListItem item={item} />}
+        contentContainerStyle={{ gap: 10 }}
+        //   ListHeaderComponent={() => <OrderListItem order={order} />}
+        //   ListFooterComponent={() => <OrderListItem order={order} />}
+        // If we want OrderListItem scroll up or bottomS with FlatList we use this solution
+      />
     </View>
   );
 }
